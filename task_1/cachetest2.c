@@ -4,7 +4,7 @@
 #include <sys/time.h>
 #include <time.h>
 
-// added by dcox740
+// added by dcox740, needed for strcmp to work
 #include <string.h>
 
 double getTime()
@@ -80,9 +80,9 @@ int main(int argc, char *argv[])
 	}
 
   // for cachetest2, array a should be accessed in random order so we shuffle array b
-  // swap two random elements of b N times to shuffle
+  // swap two random elements of b 2N times to shuffle
   srand(time(NULL));
-  for (i = 0; i < N; i++)
+  for (i = 0; i < 2*N; i++)
   {
     int index1 = rand() % N;
     int index2 = rand() % N;
@@ -115,11 +115,12 @@ int main(int argc, char *argv[])
 	printf("time: %6.2f secs\n", (t2 - t1));
 
 	/* IMPORTANT: also print the result of the code, e.g. the sum,
-   * otherwise compiler might optimise away the code */
+     * otherwise compiler might optimise away the code */
 	printf("sum: %d\n", sum);
 
 	/* free memory; examples, adjust for task */
 	free(a);
+	free(b);
 
 	return 0;
 }
