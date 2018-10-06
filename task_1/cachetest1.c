@@ -4,6 +4,9 @@
 #include <sys/time.h>
 #include <time.h>
 
+// added by dcox740
+#include <string.h>
+
 double getTime(){
   struct timeval t;
   double sec, msec;
@@ -20,7 +23,7 @@ double getTime(){
 /* for task 1 only */
 void usage(void)
 {
-	fprintf(stderr, "Usage: cachetest1/2 [--repetitions M] [--array_size N]\n");
+	fprintf(stderr, "Usage: cachetest1 [--repetitions M] [--array_size N]\n");
 	exit(1);
 }
 
@@ -32,12 +35,13 @@ int main (int argc, char *argv[])
   unsigned int M = 1000;
   unsigned int N = 256*1024; 
   unsigned int i;
+  unsigned int j;
 	
   /* declare variables; examples, adjust for task */
-	//int *a;
-	double  a[100];
- 
-  
+	int *a;
+	int *b;
+	int sum;
+
   /* parameter parsing task 1 */
   for(i=1; i<(unsigned)argc; i++) {
 	  if (strcmp(argv[i], "--repetitions") == 0) {
@@ -57,29 +61,43 @@ int main (int argc, char *argv[])
 
     
   /* allocate memory for arrays; examples, adjust for task */
-	 //a = malloc (N * sizeof(int));
+	a = malloc (N * sizeof(int));
+	b = malloc (N * sizeof(int));
 
-	 /* initialise arrray elements */
- 
-	 
-  t1 = getTime();
-  /* code to be measured goes here */
+	 /* initialise array elements */
+	for (i = 0; i < N; i++)
+	{
+		b[i] = i;
+	}
+
+ 	 t1 = getTime();
+ 	
+	/* code to be measured goes here */
+  	/***************************************/
+	for (i = 0; i < M; i++)
+	{
+		sum = 0;
+		for (j = 0; j < N; j++)
+		{
+			sum += a[b[j]];
+
+		}
+	}
+	
+	
+	
   /***************************************/
-	
-	
-	
-	
-  /***************************************/
-	t2 = getTime(); 
+	t2 = getTime();
   
   /* output; examples, adjust for task */
-  printf("time: %6.2f secs\n",(t2 - t1));
+  	printf("time: %6.2f secs\n",(t2 - t1));
 
-  /* IMPORTANT: also print the result of the code, e.g. the sum, 
+  /* IMPORTANT: also print the result of the code, e.g. the sum,
    * otherwise compiler might optimise away the code */
+	printf("sum: %d\n", sum);
   
   /* free memory; examples, adjust for task */
-  //free(a);
+  free(a);
 
-  return 0;  
+  return 0;
 }
