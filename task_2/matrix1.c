@@ -4,29 +4,29 @@
 #include <sys/time.h>
 #include <time.h>
 
+double getTime()
+{
+	struct timeval t;
+	double sec, msec;
 
-double getTime(){
-  struct timeval t;
-  double sec, msec;
-  
-  while (gettimeofday(&t, NULL) != 0);
-  sec = t.tv_sec;
-  msec = t.tv_usec;
-  
-  sec = sec + msec/1000000.0;
-  
-  return sec;
+	while (gettimeofday(&t, NULL) != 0);
+	sec = t.tv_sec;
+	msec = t.tv_usec;
+
+	sec = sec + msec / 1000000.0;
+
+	return sec;
 }
 
-
-int main (int argc, char *argv[])
+int main(int argc, char *argv[])
 {
-  	double t1, t2; 
+	double t1, t2;
 
 	/* Declare variables */
 	int N = 1000;
 	unsigned int i;
 	unsigned int j;
+	unsigned int k;
 
 	// we will compute A * B and store it in C
 	double **A;
@@ -39,12 +39,12 @@ int main (int argc, char *argv[])
 	A = malloc(N * sizeof(double *));
 	B = malloc(N * sizeof(double *));
 	C = malloc(N * sizeof(double *));
-    for (i=0; i<N; i++)
+	for (i = 0; i < N; i++)
 	{
- 		A[i] = malloc(N * sizeof(double));
+		A[i] = malloc(N * sizeof(double));
 		B[i] = malloc(N * sizeof(double));
 		C[i] = malloc(N * sizeof(double));
-	} 
+	}
 
 	printf("hello\n");
 
@@ -53,39 +53,46 @@ int main (int argc, char *argv[])
 	{
 		for (j = 0; j < N; j++)
 		{
+
 			A[i][j] = 0;
 			B[i][j] = 0;
 		}
 	}
 
- 
-	 
 	t1 = getTime();
-  	/* code to be measured goes here */
-  	/***************************************/
-	
+	/* code to be measured goes here */
+	/***************************************/
+
 	// compute A * B and store it in C
 	for (i = 0; i < N; i++)
 	{
 		for (j = 0; j < N; j++)
 		{
-			
+			int productEntry = 0;
+			for (k = 0; k < N; k++)
+			{
+				productEntry += A[i][k] * B[k][j];
+			}
+
+			C[i][j] = productEntry;
 		}
 	}
-	
-	
-	
-  	/***************************************/
-	t2 = getTime(); 
-  
-  	/* output; examples, adjust for task */
-  	printf("time: %6.2f secs\n",(t2 - t1));
+	/***************************************/
+	t2 = getTime();
 
-  /* IMPORTANT: also print the result of the code, e.g. the sum, 
-   * otherwise compiler might optimise away the code */
-  
-  /* free memory; examples, adjust for task */
-  //free(a);
+	printf("time: %6.2f secs\n", (t2 - t1));
 
-  return 0;  
+	/* Free memory allocated to arrays */
+	for (i = 0; i < N; i++)
+	{
+		free(A[i]);
+		free(B[i]);
+		free(C[i]);
+	}
+
+	free(A);
+	free(B);
+	free(C);
+
+	return 0;
 }

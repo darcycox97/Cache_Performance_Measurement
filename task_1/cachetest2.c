@@ -4,9 +4,6 @@
 #include <sys/time.h>
 #include <time.h>
 
-// added by dcox740, needed for strcmp to work
-#include <string.h>
-
 double getTime()
 {
 	struct timeval t;
@@ -32,13 +29,12 @@ int main(int argc, char *argv[])
 {
 	double t1, t2;
 
-	/* variables for task 1 */
+	/* declare variables */
 	unsigned int M = 1000;
 	unsigned int N = 256 * 1024;
 	unsigned int i;
 	unsigned int j;
 
-	/* declare variables; examples, adjust for task */
 	int *a;
 	int *b;
 	int sum;
@@ -66,7 +62,7 @@ int main(int argc, char *argv[])
 			usage();
 	}
 
-	/* allocate memory for arrays; examples, adjust for task */
+	/* allocate memory for arrays */
 	a = malloc(N * sizeof(int));
 	b = malloc(N * sizeof(int));
 
@@ -79,20 +75,18 @@ int main(int argc, char *argv[])
 		a[i] = 0;
 	}
 
-  // for cachetest2, array a should be accessed in random order so we shuffle array b
-  // swap two random elements of b 2N times to shuffle
-  srand(time(NULL));
-  for (i = 0; i < 2*N; i++)
-  {
-    int index1 = rand() % N;
-    int index2 = rand() % N;
+	// for cachetest2, array a should be accessed in random order so we shuffle array b
+	// swap two random elements of b 2N times to shuffle
+	srand(time(NULL));
+	for (i = 0; i < 2 * N; i++)
+	{
+		int index1 = rand() % N;
+		int index2 = rand() % N;
 
-    int tmp = b[index1];
-    b[index1] = b[index2];
-    b[index2] = tmp;
-  }
-
-
+		int tmp = b[index1];
+		b[index1] = b[index2];
+		b[index2] = tmp;
+	}
 
 	t1 = getTime();
 
@@ -111,14 +105,13 @@ int main(int argc, char *argv[])
 	/***************************************/
 	t2 = getTime();
 
-	/* output; examples, adjust for task */
 	printf("time: %6.2f secs\n", (t2 - t1));
 
 	/* IMPORTANT: also print the result of the code, e.g. the sum,
      * otherwise compiler might optimise away the code */
 	printf("sum: %d\n", sum);
 
-	/* free memory; examples, adjust for task */
+	/* free memory */
 	free(a);
 	free(b);
 
