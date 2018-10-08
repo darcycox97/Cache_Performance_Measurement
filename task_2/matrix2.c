@@ -58,6 +58,26 @@ int main(int argc, char *argv[])
     }
   }
 
+  /* Put some values into the operand matrices so we know the multiplication is correct. 
+	 * With the values, C[0][0] = 26, C[0][1] = 46, C[1][0] = 22, C[1][1] = 39 */
+	A[0][0] = 1;
+	A[0][1] = 2;
+	A[0][2] = 3;
+	A[0][3] = 4;
+	A[1][0] = 2;
+	A[1][1] = 1;
+	A[1][2] = 2;
+	A[1][3] = 3;
+
+	B[0][0] = 3;
+	B[0][1] = 5;
+	B[1][0] = 2;
+	B[1][1] = 1;
+	B[2][0] = 1;
+	B[2][1] = 5;
+	B[3][0] = 4;
+	B[3][1] = 6;
+
   t1 = getTime();
   /* code to be measured goes here */
   /***************************************/
@@ -77,12 +97,11 @@ int main(int argc, char *argv[])
   {
     for (j = 0; j < N; j++)
     {
-      int productEntry = 0;
+      double productEntry = 0;
       for (k = 0; k < N; k++)
       {
-        productEntry += A[i][k] * BTranspose[i][k];
+        productEntry += A[i][k] * BTranspose[j][k];
       }
-
       C[i][j] = productEntry;
     }
   }
@@ -90,7 +109,11 @@ int main(int argc, char *argv[])
   t2 = getTime();
 
   printf("time: %6.2f secs\n", (t2 - t1));
-
+  printf("C[0][0]: %.1lf\n", C[0][0]);
+	printf("C[0][1]: %.1lf\n", C[0][1]);
+	printf("C[1][0]: %.1lf\n", C[1][0]);
+	printf("C[1][1]: %.1lf\n", C[1][1]);
+  
   /* Free memory allocated to arrays */
   for (i = 0; i < N; i++)
   {
