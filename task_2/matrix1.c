@@ -33,8 +33,6 @@ int main(int argc, char *argv[])
 	double **B;
 	double **C;
 
-	printf("Hope i can get past here hehe\n");
-
 	/* Allocate memory for the matrices */
 	A = malloc(N * sizeof(double *));
 	B = malloc(N * sizeof(double *));
@@ -45,8 +43,6 @@ int main(int argc, char *argv[])
 		B[i] = malloc(N * sizeof(double));
 		C[i] = malloc(N * sizeof(double));
 	}
-
-	printf("hello\n");
 
 	/* zero the operand matrices */
 	for (i = 0; i < N; i++)
