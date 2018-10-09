@@ -74,6 +74,14 @@ int main(int argc, char *argv[])
 		a[i] = 0;
 	}
 
+	// put some values into a so we can check the sum is correct
+	sum = 0;
+	for (i = 0; i < 50; i++)
+	{
+		a[N - 1 - i] = i;
+		sum += i;
+	}
+	printf("Output should be: %d\n", sum);
 
 	t1 = getTime();
 
