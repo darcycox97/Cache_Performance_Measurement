@@ -4,6 +4,8 @@
 #include <sys/time.h>
 #include <time.h>
 
+// darcy cox, dcox740
+
 double getTime()
 {
   struct timeval t;

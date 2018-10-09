@@ -4,6 +4,8 @@
 #include <sys/time.h>
 #include <time.h>
 
+// Darcy Cox, dcox740
+
 double getTime()
 {
   struct timeval t;
@@ -88,7 +90,7 @@ int main(int argc, char *argv[])
   // A is partitioned into slivers of length blockSize, and B is partitioned into blocks of blockSize x blockSize. 
   // For each blockSize x blockSize block of B, N 1 x blockSize slivers are accessed. The sum of each entry in C
   // is accumulated over several blocks before the entry is fully computed.
-  blockSize = 64; //TODO get best block size (relate to cache line) and blockSize should divide evenly into N(?)
+  blockSize = 64; // (block of B) 64 x 64 x 8 + (sliver of A) 64 x 8 < L1CacheSize so we are minimizing cache misses
   for (rowOffset = 0; rowOffset < N; rowOffset += blockSize)
   {
     for (colOffset = 0; colOffset < N; colOffset += blockSize)
@@ -96,7 +98,7 @@ int main(int argc, char *argv[])
       // for each block, calculate the part of each entry in C
       // that we possibly can while only using the blockSize x blockSize block
       for (i = 0; i < N; i++)
-      {
+      { 
         for (j = colOffset; j < colOffset + blockSize && j < N; j++)
         {
           // adding onto the previously accumulated value for this particular C entry

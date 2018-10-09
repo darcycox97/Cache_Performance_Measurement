@@ -5,6 +5,8 @@
 #include <time.h>
 #include <string.h>
 
+// Darcy Cox, dcox740
+
 double getTime()
 {
 	struct timeval t;
